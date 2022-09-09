@@ -1,0 +1,23 @@
+name: "Run some task on a domain"
+description: "Some description"
+
+inputs:
+  target:
+    description: "Domain"
+    required: true
+
+outputs:
+  run-tests:
+    description: "Run tests boolean"
+    value: ${{ steps.check-run-tests.outputs.run-tests-result }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Check run tests
+      id: check-run-tests
+      run: |
+        RESULT=`./.github/scripts/some-task.sh ${{ inputs.target }}`
+        echo $RESULT
+        echo "::set-output name=run-tests-result::$RESULT"
+      shell: bash

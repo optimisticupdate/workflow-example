@@ -1,0 +1,8 @@
+name: Build targets (First Domain)
+on: [push]
+
+jobs:
+  main:
+    uses: ./.github/workflows/reusable-build.yml
+    with:
+      domain: first-domain

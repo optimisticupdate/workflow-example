@@ -1,0 +1,21 @@
+name: Build targets (Second Domain)
+on: [push]
+
+jobs:
+  get_api_key_for_test:
+    outputs:
+      apikey: ${{ steps.get-api-key.outputs.apikey }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get api key for test
+        id: get-api-key
+        shell: bash
+        run: |
+          echo "::set-output name=apikey::examplekey"
+  main:
+    needs: [get_api_key_for_test]
+    uses: ./.github/workflows/reusable-build.yml
+    with:
+      domain: second-domain
+    secrets:
+      test_api_key: ${{needs.get_api_key_for_test.outputs.apikey}}
