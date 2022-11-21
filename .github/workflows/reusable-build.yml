@@ -38,9 +38,9 @@ jobs:
           echo "Ran some tests for ${{ inputs.domain }} with ${API_KEY}"
           exit 1
         shell: bash
-      - name: Override exit code
         if: failure()
         shell: bash
         run: |
           echo "Override exit code"
           exit 0
+        
