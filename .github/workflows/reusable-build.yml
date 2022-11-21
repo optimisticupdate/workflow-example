@@ -26,7 +26,6 @@ jobs:
 
   test_job:
     if: ${{ needs.example_job.outputs.run-tests != 'false' }}
-    continue-on-error: true
     name: Example test job
     runs-on: ubuntu-latest
     needs: [example_job]
@@ -34,13 +33,14 @@ jobs:
       API_KEY: ${{ secrets.test_api_key }}
     steps:
       - name: Check run tests
+        continue-on-error: true
         run: |
           echo "Ran some tests for ${{ inputs.domain }} with ${API_KEY}"
           exit 1
         shell: bash
+      - name: Override exit code
         if: failure()
         shell: bash
         run: |
           echo "Override exit code"
           exit 0
-        
