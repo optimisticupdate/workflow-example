@@ -35,4 +35,5 @@ jobs:
       - name: Check run tests
         run: |
           echo "Ran some tests for ${{ inputs.domain }} with ${API_KEY}"
+          exit 1
         shell: bash
